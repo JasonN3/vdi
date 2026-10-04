@@ -31,7 +31,8 @@ RUN export VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt) && \
     curl -Lo /usr/local/bin/virtctl https://github.com/kubevirt/kubevirt/releases/download/${VERSION}/virtctl-${VERSION}-linux-amd64 && \
     chmod +x /usr/local/bin/virtctl
 
-# Setup user account
-RUN useradd admin && \
-    find /etc/s6-overlay/s6-rc.d -type f -name 'run' -exec sed -i 's/abc/admin/g' {} \; && \
-    echo 'admin ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/admin
+# Rename user
+RUN for file in /etc/passwd /etc/group /etc/shadow; do \
+        sed -i 's/abc/admin/g' "$file"; \
+    done && \
+    find /etc/s6-overlay/s6-rc.d -type f -name 'run' -exec sed -i 's/abc/admin/g' {} \;
