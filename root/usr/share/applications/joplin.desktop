@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Joplin
+Comment=Note taking
+Exec=/usr/local/bin/joplin
+Icon=/usr/local/src/joplin/joplin.png
+Categories=Office;
+Terminal=false
