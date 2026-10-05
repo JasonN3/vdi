@@ -35,4 +35,5 @@ RUN export VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt) && \
 RUN for file in /etc/passwd /etc/group /etc/shadow; do \
         sed -i 's/abc/user/g' "$file"; \
     done && \
-    find /etc/s6-overlay/s6-rc.d -type f -name 'run' -exec sed -i 's/abc/user/g' {} \;
+    find /etc/s6-overlay/s6-rc.d -type f -name 'run' -exec sed -i 's/abc/user/g' {} \; && \
+    usermod -d /home/user user
