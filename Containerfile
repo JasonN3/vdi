@@ -37,3 +37,6 @@ RUN for file in /etc/passwd /etc/group /etc/shadow; do \
     done && \
     find /etc/s6-overlay/s6-rc.d -type f -name 'run' -exec sed -i 's/abc/user/g' {} \; && \
     usermod -d /home/user user
+
+ENV HOME=/home/user \
+    START_DOCKER=false
