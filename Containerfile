@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/webtop:fedora-mate
+FROM ghcr.io/linuxserver/webtop:fedora-mate@sha256:37c7c611b00158a5847eed0504e4b8405103e403d2f5f5696e23c987e3de1eed
 
 COPY root/ /
 
