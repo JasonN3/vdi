@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/webtop:fedora-mate
+FROM ghcr.io/linuxserver/webtop:fedora-mate@sha256:37c7c611b00158a5847eed0504e4b8405103e403d2f5f5696e23c987e3de1eed
 
 COPY root/ /
 
@@ -26,5 +26,17 @@ RUN cd /usr/local/src && \
 # Install kubectl and virtctl
 RUN export VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt) && \
     curl -Lo /usr/local/bin/kubectl "https://dl.k8s.io/release/${VERSION}/bin/linux/amd64/kubectl" && \
+    chmod +x /usr/local/bin/kubectl && \
     export VERSION=$(curl https://storage.googleapis.com/kubevirt-prow/release/kubevirt/kubevirt/stable.txt) && \
-    curl -Lo /usr/local/bin/virtctl https://github.com/kubevirt/kubevirt/releases/download/${VERSION}/virtctl-${VERSION}-linux-amd64
+    curl -Lo /usr/local/bin/virtctl https://github.com/kubevirt/kubevirt/releases/download/${VERSION}/virtctl-${VERSION}-linux-amd64 && \
+    chmod +x /usr/local/bin/virtctl
+
+# Rename user
+RUN for file in /etc/passwd /etc/group /etc/shadow; do \
+        sed -i 's/abc/user/g' "$file"; \
+    done && \
+    find /etc/s6-overlay/s6-rc.d -type f -name 'run' -exec sed -i 's/abc/user/g' {} \; && \
+    usermod -d /home/user user
+
+ENV HOME=/home/user \
+    START_DOCKER=false
