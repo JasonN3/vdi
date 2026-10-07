@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=FreeCAD
+Comment=3D Modeling
+Exec=/usr/local/bin/freecad
+Icon=/usr/local/src/freecad/org.freecad.FreeCAD.svg
+Categories=Other;
+Terminal=false
