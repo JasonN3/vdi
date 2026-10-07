@@ -24,7 +24,8 @@ RUN dnf install -y libreoffice && \
 FROM LIBREOFFICE AS TOOLS
 RUN dnf install -y \
       jq \
-      virt-viewer && \
+      virt-viewer \
+      opentofu && \
     dnf clean all
 
 FROM TOOLS AS JOPLIN
